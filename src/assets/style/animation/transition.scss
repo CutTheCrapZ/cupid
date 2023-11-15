@@ -1,0 +1,30 @@
+@mixin fdeInUp {
+    animation: fdeInUp;
+}
+
+@keyframes fdeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -40%, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@mixin fadeOutDown {
+    animation: fadeOutDown;
+}
+
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+}
