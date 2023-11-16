@@ -8,8 +8,8 @@ export default (config: any) => {
   let oneDriveHttp = config.oneDriveHttp
   // 创建axios实例
   const service: any = axios.create({
-    // baseURL: import.meta.env.VITE_API_BASE_URL,
-    baseURL: "https://www.cupid.ink:8000",
+    baseURL: import.meta.env.VITE_API_BASE_URL,
+    // baseURL: "https://www.cupid.ink:8000",
     // 超时
     timeout: 50000
   })
