@@ -5,11 +5,12 @@
         //  ele.getBoundingClientRect()    返回元素的大小及其相对于视口的位置。
 
         let width = docEl.getBoundingClientRect().width;
+        console.log(width)
         if (width > 750) { // 最大宽度,  750为设计稿的宽度
-            docEl.style.fontSize = '20px';
+            docEl.style.fontSize = Math.round(20/1920*document.body.clientWidth)+"px"
         } else {
             // var rem = width / 19.19999;
-            var rem = width / 40;
+            var rem = width / 24;
             docEl.style.fontSize = rem + 'px';
         }
     }

@@ -1,0 +1,19 @@
+.weibo {
+    @media screen and (max-width: 560px) {
+        width: 100% !important;
+        border-radius: 10px;
+    }
+
+    .post-card-title {
+        @media screen and (max-width: 560px) {
+            letter-spacing: 2px;
+            font-size: 1.6rem !important;
+            height: 3.6rem;
+            line-height: 3.6rem;
+        }
+    }
+
+    .tag {
+        font-size: .8rem;
+    }
+}

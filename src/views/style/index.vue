@@ -11,11 +11,11 @@
 </template>
 
 <script lang='ts' setup>
-import { getAssetsFile } from "@/utils/common";
+import { disposeOneDriveImage } from "@/utils/common";
 import { ref, onMounted, nextTick } from 'vue'
 import { getStyleList } from "@/api/common";
 import { useRouter } from 'vue-router';
-import { getFileChildren } from "@/api/oneDrive";
+import { getItemById } from "@/api/oneDrive";
 const data = ref<{ src: string, position: { height: number, width: number, top: number, left: number }, id: string }[]>([])//图片列表
 const heightList = ref<number[]>([])//高度数组，每一列的高度
 const itemWidth = ref<number>(0);
@@ -57,11 +57,12 @@ const debounce = (fn: Function, delay: number | undefined) => {
     }, Number(delay)))
   }
 };
-const getImage = async (src: string, i: number) => {
-  console.log(src);
+const getImage = async (src: string) => {
   return new Promise((resolve, reject) => {
+    console.log(src)
     let img = new Image()
     img.src = src
+
     img.onload = () => {
       let rootPx = document.documentElement.style.fontSize.replace("px", "")//根元素fontsize
       let index = heightList.value.indexOf(Math.min(...heightList.value))//取高度数组最小值下标
@@ -71,13 +72,10 @@ const getImage = async (src: string, i: number) => {
       let top = heightList.value[index] // 定位Y
       heightList.value[index] += img.height + Number(rootPx) * 2//拼接最低高度
       img.width = itemWidth.value
-      console.log({ src: src, position: { height: img.height + "px", width: img.width + "px", top: top + "px", left: left + "px" } });
-
-      // return { src: src, position: { height: image.height + "px", width: image.width + "px", top: top + "px", left: left + "px" } }
       resolve({ src: src, position: { height: img.height + "px", width: img.width + "px", top: top + "px", left: left + "px" } })
     }
-    img.onerror = (e,a) => {
-      console.log(e,a,431432);
+    img.onerror = (e, a) => {
+      console.log(e, a, 431432);
       reject(e)
 
     }
@@ -92,9 +90,6 @@ const observe = () => {
   // 那么就将多的那一列去掉, 再计算
   // let index = data.value.length - heightList.value.length + 1
   let index = data.value.length - (data.value.length % heightList.value.length) - heightList.value.length + 1
-  console.log(index);
-  console.log(imgs);
-
   // 创建一个观察者对象, 这个对象会在观察物出现和离开可视区执行构造函数中的回调函数
   // 回调函数中两个参数, 一个是被观察对象触发时的各种数据, 一个是观察者实例对象
   const obser = new IntersectionObserver((config, observe) => {
@@ -125,25 +120,26 @@ const getdata = async () => {
   try {
     let res = await getStyleList(reqData.value)
     if (res.code === 200) {
-      console.log(res);
-
       reqData.value = res.pagination
-      let arr = res.list.map(async (ele: { imgUrl: string[], _id: string }, i: number) => {
-        let e = await getImage(ele.imgUrl[0], i) as { src: string, position: {} }
-        let obj = { name: "xxx", src: ele.imgUrl[0], id: ele._id, position: e.position }
-        return obj
+      let arr = res.list.map(async (ele: { imgIdList: string[], _id: string, showImage: string }, i: number) => {
+        let buffer = await getItemById(ele.imgIdList[0])
+        ele.showImage = disposeOneDriveImage(buffer)
+        return ele
       })
-      console.log(arr);
-
       Promise.all(arr).then(async res => {
-        data.value.push(...res)
-        console.log(res);
-        await nextTick()
-        observe();
+        let arr = res.map(async ele => {
+          let e = await getImage(ele.showImage) as { src: string, position: {} }
+          let obj = { name: "xxx", src: e.src, id: ele._id, position: e.position }
+          return obj
+        })
+        Promise.all(arr).then(async (resChild:any) => {
+          data.value.push(...resChild)
+          await nextTick()
+          observe();
+        })
       }).catch((e) => {
-        console.log(e, "error");
-
       })
+
     }
   } catch (error) {
     throw new Error(error as string);

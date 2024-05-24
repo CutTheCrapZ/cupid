@@ -1,12 +1,12 @@
 <!--  -->
 <template>
-    <div>
+    <div style="height: 100%;">
         <div class="content content-intro">
             <div class="content-inner" style="background: unset;"><canvas id="background" width="2560"
                     height="1291"></canvas>
                 <div class="wrap fade in">
                     <!-- github -->
-                    <!-- <a class="github-corner" href="https://github.com/Tomotoes/HomePage"
+                    <!-- <a class="github-corner" href=""
 						aria-label="View source on GitHub" target="_blank" rel="noopener noreferrer"><svg width="80"
 							height="80" viewBox="0 0 250 250"
 							style="fill:transparent; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
@@ -28,13 +28,6 @@
                     <div class="arrow arrow-2"></div>
                 </div>
             </div>
-            <div class="shape-wrap"><svg class="shape" width="100%" height="100vh" preserveAspectRatio="none"
-                    viewBox="0 0 1440 800" xmlns:pathdata="http://www.codrops.com/" style="fill: rgb(30, 31, 33);">
-                    <path
-                        d="M-44-50C-52.71 28.52 15.86 8.186 184 14.69 383.3 22.39 462.5 12.58 638 14 835.5 15.6 987 6.4 1194 13.86 1661 30.68 1652-36.74 1582-140.1 1512-243.5 15.88-589.5-44-50Z"
-                        pathdata:id="M -44,-50 C -137.1,117.4 67.86,445.5 236,452 435.3,459.7 500.5,242.6 676,244 873.5,245.6 957,522.4 1154,594 1593,753.7 1793,226.3 1582,-126 1371,-478.3 219.8,-524.2 -44,-50 Z">
-                    </path>
-                </svg></div>
         </div>
         <div class="content content-main">
             <div id="card">
@@ -46,8 +39,8 @@
                     <ul>
                         <li><a @click="topage('blog')" aria-label="Blog"><i class="icon icon-bokeyuan"></i><span
                                     data-translate="Blog">Blog</span></a></li>
-                        <li><a @click="topage('about')" aria-label="About"><i class="icon icon-other"></i><span
-                                    data-translate="About">About</span></a></li>
+                        <li><a @click="topage('learn')" aria-label="Learn"><i class="icon icon-other"></i><span
+                                    data-translate="Learn">Learn</span></a></li>
                         <li><a @click="topage('style')" aria-label="Style"><i class="icon icon-xiaolian"></i><span
                                     data-translate="Style">Style</span></a></li>
                         <li v-if="store.token"><a @click="topage('think')" aria-label="Think"><i

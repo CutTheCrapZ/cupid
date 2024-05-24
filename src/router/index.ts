@@ -14,8 +14,34 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/blog/index.vue"),
   },
   {
-    path: "/about",
-    component: () => import("@/views/blog/index.vue"),
+    path: "/learn",
+    component: () => import("@/views/learn/index.vue"),
+    children: [
+      {
+        path: "recursiveComponents",
+        name: "recursiveComponents",
+        label:"递归组件",
+        component: () => import('@/views/learn/children/recursiveComponents/index.vue')
+      },
+      {
+        path: "dynamicComponents",
+        name: "dynamicComponents",
+        label:"动态组件",
+        component: () => import('@/views/learn/children/dynamicComponents/index.vue')
+      },
+      {
+        path: "keepAlive",
+        name: "keepAlive",
+        label:"keep-alive",
+        component: () => import('@/views/learn/children/keepAlive/index.vue')
+      },
+      {
+        path: "customDirectives",
+        name: "customDirectives",
+        label:"自定义指令",
+        component: () => import('@/views/learn/children/customDirectives/index.vue')
+      }
+    ],
   },
   {
     path: "/weibo",
@@ -28,7 +54,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/style/detail',
     component: () => import("@/views/style/children/index.vue")
-
+  },
+  {
+    path: "/huidongTech",
+    component: () => import("@/views/huidongTech/index.vue"),
   }
   // {
   //   path: "/think",

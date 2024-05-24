@@ -1153,7 +1153,7 @@ SOFTWARE.
 
   const changeColor = () => {
     document.querySelector(".content-inner").style.background = "unset";
-    document.querySelector(".shape").style.fill = "#1e1f21";
+    // document.querySelector(".shape").style.fill = "#1e1f21";
   };
 
   const initBackground = () => {

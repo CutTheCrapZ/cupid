@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import './style.scss'
 import "@/utils/rem"
 import 'animate.css';
-import "@/assets/style/font/font.scss"
+// import "@/assets/style/font/font.scss"
 import App from './App.vue'
 import VConsole from 'vconsole';
 import router from "@/router/index"
@@ -10,7 +10,11 @@ import { createPinia } from 'pinia'
 // 引入持久化插件
 import persist from 'pinia-plugin-persistedstate'
 const pinia = createPinia()
-createApp(App).use(router).use(pinia.use(persist)).mount('#app')
+
+
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+createApp(App).use(router).use(ElementPlus).use(pinia.use(persist)).mount('#app')
 
 // 判断是否是pc设备
 const isPc = () => {
