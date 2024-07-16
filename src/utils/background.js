@@ -1719,7 +1719,15 @@ SOFTWARE.
     }
     updatePointerUpData(pointers[0]);
   });
-
+  var passiveSupported = false;
+  try {
+    var options = Object.defineProperty({}, "passive", {
+      get: function () {
+        passiveSupported = true;
+      }
+    });
+    window.addEventListener("test", null, options);
+  } catch (err) { }
   document.addEventListener("touchstart", (e) => {
     if (switchPage && switchPage.switched) {
       return;
@@ -1733,8 +1741,16 @@ SOFTWARE.
       let posY = scaleByPixelRatio(touches[i].pageY);
       updatePointerDownData(pointers[i + 1], touches[i].identifier, posX, posY);
     }
-  });
-
+  }, passiveSupported ? { passive: true } : false);
+  // Passive Event Listeners就是告诉前页面内的事件监听器内部是否会调用preventDefault函数来阻止事件的默认行为，以便浏览器根据这个信息更好地做出决策来优化页面性能。当属性passive的值为true的时候，代表该监听器内部不会调用preventDefault函数来阻止默认滑动行为，Chrome浏览器称这类型的监听器为被动（passive）监听器。目前Chrome主要利用该特性来优化页面的滑动性能，所以Passive Event Listeners特性当前仅支持mousewheel/touch相关事件
+  /* 
+  以前的事件捕获代码如下：
+  document.addEventListener("click", fn, false/true)
+  第三个参数决定了fn函数是在冒泡还是捕获阶段触发。
+  现在第三个参数不但可以是布尔值，还可是一个对象
+  document.addEventListener("mousewheel", fn, {passive: true})
+  由于passive对象只在Chrome浏览器中支持，所以这里需要做一个兼容处理,如上passiveSupported
+  */
   document.addEventListener(
     "touchmove",
     (e) => {

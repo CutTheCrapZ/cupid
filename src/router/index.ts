@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
-
 // 2. 配置路由
 const routes: Array<RouteRecordRaw> = [
   {
@@ -20,27 +19,34 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "recursiveComponents",
         name: "recursiveComponents",
-        label:"递归组件",
+        label: "递归组件",
         component: () => import('@/views/learn/children/recursiveComponents/index.vue')
       },
       {
         path: "dynamicComponents",
         name: "dynamicComponents",
-        label:"动态组件",
+        label: "动态组件",
         component: () => import('@/views/learn/children/dynamicComponents/index.vue')
       },
       {
         path: "keepAlive",
         name: "keepAlive",
-        label:"keep-alive",
+        label: "keep-alive",
         component: () => import('@/views/learn/children/keepAlive/index.vue')
       },
       {
         path: "customDirectives",
         name: "customDirectives",
-        label:"自定义指令",
+        label: "自定义指令",
         component: () => import('@/views/learn/children/customDirectives/index.vue')
-      }
+      },
+      {
+        path: "fontStrokes",
+        name: "fontStrokes",
+        label: "字体描边",
+        component: () => import('@/views/learn/children/fontStrokes/index.vue')
+      },
+
     ],
   },
   {
@@ -54,16 +60,16 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/style/detail',
     component: () => import("@/views/style/children/index.vue")
-  },
-  {
-    path: "/huidongTech",
-    component: () => import("@/views/huidongTech/index.vue"),
   }
   // {
   //   path: "/think",
   //   component: () => import("@/views/think/index.vue"),
   // }
 ];
+if (import.meta.env.VITE_NODE_ENV != "production") {
+  console.log(import.meta.env.VITE_NODE_ENV);
+  routes[0].redirect = '/blog'
+}
 // 1.返回一个 router 实列，为函数，里面有配置项（对象） history
 const router = createRouter({
   history: createWebHashHistory(),

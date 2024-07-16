@@ -15,7 +15,5 @@ export const disposeOneDriveImage = (data: string): string => {
   // img.src = window.URL.createObjectURL(blob);
   // $("#imgcontainer").html(img);
   const qrUrl = (window.URL || window.webkitURL).createObjectURL(blob)
-  console.log(qrUrl);
-  
   return qrUrl
 }

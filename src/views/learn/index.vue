@@ -6,17 +6,11 @@
         <div class="header">
           <span> {{ item.label }}</span>
           <span class="date">{{ item.date }}</span>
-          <!-- <span class="tag" :style="{ backgroundColor: tag[item.tag].background, color: tag[item.tag].color }">{{
-        tag[item.tag].text }}</span> -->
         </div>
-
-
       </div>
     </div>
     <div style="flex-grow:1;background-color:#fff;margin:1rem;border-radius:10px;padding:.5rem">
-
       <router-view></router-view>
-
     </div>
   </div>
 </template>
@@ -31,10 +25,6 @@ let router = useRouter()
 let r = router.options.routes.filter(ele => {
   return ele.path === "/learn"
 })
-// setTimeout(() => {
-//   router.back()
-
-// }, 2000);
 let currentRouter = ""
 const toPage = (page: string) => {
   if (currentRouter == page) return

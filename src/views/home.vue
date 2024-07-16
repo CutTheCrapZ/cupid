@@ -64,7 +64,6 @@ import { background } from "@/utils/background.js";
 import { main } from "@/utils/main.js";
 import { searchToken, uploadToken, getToken, checkToken } from "@/api/oneDrive";
 import { refreshT } from "@/utils/oneDrive";
-// import { refreshT } from "@/utils/oneDrive";
 const store = useStore();
 const getT = async () => {
     let res = await getToken()
@@ -72,7 +71,6 @@ const getT = async () => {
         res.data.access_token && localStorage.setItem("access_token", res.data.access_token)
         res.data.refresh_token && localStorage.setItem("refresh_token", res.data.refresh_token)
         res.data.token_type && localStorage.setItem("token_type", res.data.token_type)
-        // refreshToken()
         try {
             await checkToken()
         } catch (error) {
@@ -113,7 +111,7 @@ const topage = (page: string) => {
 }
 </script>
 <style lang='scss'>
-@import '../assets/style/homeStyle';
+@import '@/assets/style/homeStyle';
 @import '@/assets/style/animation/transition.scss';
 
 .github-corner:hover .octo-arm {
