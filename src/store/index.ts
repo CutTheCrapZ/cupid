@@ -12,13 +12,17 @@ export const useStore = defineStore('main', {
     state: () => {
         return {
             info: "pinia 可以使用",
-            token: ""
+            token: "",
+            isBackHome:false,
         }
     },
     getters: {},
     actions: {
         async SAVETOKEN(token: string) {
             this.token = token
+        },
+        async SAVEBACKHOME(v: boolean) {
+            this.isBackHome = v
         }
     }
 }

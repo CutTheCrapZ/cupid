@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
-
+import pinia from '@/store/pinia';
+import { useStore } from "@/store";
 // 2. 配置路由
 const routes: Array<RouteRecordRaw> = [
   {
@@ -40,11 +41,19 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
-
+const store = useStore(pinia);
 // 添加统一判断是否返回
-router.afterEach((to) => {  // 一定要再afterEach中判断而不是beforeEach，因为beforeEach在点击返回之后获取到的值不准确，每返回一次，会获取到延后一次的to、history
+router.afterEach((to, from, failure) => {  // 一定要再afterEach中判断而不是beforeEach，因为beforeEach在点击返回之后获取到的值不准确，每返回一次，会获取到延后一次的to、history
+  console.log(to, from, failure)
   if (window.history.state && window.history.state.forward) { // 或者判断 to.forward,window.history.state.forward是vue-router写入的，当返回或前进的时候才会有值
+    console.log(123)
     to.meta.isBack = true;
+    if (to.fullPath == '/' && from.fullPath == '/') {
+      store.SAVEBACKHOME(false)
+    } else {
+      store.SAVEBACKHOME(true)
+    }
+    console.log(store.isBackHome)
   } else {
     to.meta.isBack = false;
   }

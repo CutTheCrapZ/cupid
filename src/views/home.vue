@@ -1,7 +1,7 @@
 <!--  -->
 <template>
     <div>
-        <div class="content content-intro">
+        <div class="content content-intro" :style="{ display: showAnimae ? 'block' : 'none' }">
             <div class="content-inner" style="background: unset;"><canvas id="background" width="2560"
                     height="1291"></canvas>
                 <div class="wrap fade in">
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="shape-wrap"><svg class="shape" width="100%" height="100vh" preserveAspectRatio="none"
-                    viewBox="0 0 1440 800" xmlns:pathdata="http://www.codrops.com/" style="fill: rgb(30, 31, 33);">
+                    viewBox="0 0 1440 800" style="fill: rgb(30, 31, 33);">
                     <path
                         d="M-44-50C-52.71 28.52 15.86 8.186 184 14.69 383.3 22.39 462.5 12.58 638 14 835.5 15.6 987 6.4 1194 13.86 1661 30.68 1652-36.74 1582-140.1 1512-243.5 15.88-589.5-44-50Z"
                         pathdata:id="M -44,-50 C -137.1,117.4 67.86,445.5 236,452 435.3,459.7 500.5,242.6 676,244 873.5,245.6 957,522.4 1154,594 1593,753.7 1793,226.3 1582,-126 1371,-478.3 219.8,-524.2 -44,-50 Z">
@@ -38,7 +38,7 @@
         </div>
         <div class="content content-main">
             <div id="card">
-                <div class="card-inner fade">
+                <div class="card-inner fade" :class="{ in: !showAnimae }">
                     <header><img src="@/assets/avatar.jpg" style="width: 5rem;height: 5rem;" alt="avatar">
                         <h1 data-translate="name">Song</h1>
                         <h2 id="signature" data-translate="signature">Code &amp; Input &amp; Output</h2>
@@ -64,7 +64,7 @@
 </template>
 
 <script lang='ts' setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { useStore } from "@/store";
 import { background } from "@/utils/background.js";
@@ -81,7 +81,7 @@ const getT = async () => {
         res.data.token_type && localStorage.setItem("token_type", res.data.token_type)
         // refreshToken()
         try {
-            await checkToken()
+            // await checkToken()
         } catch (error) {
             refreshT(res.data.refresh_token)
         }
@@ -112,16 +112,23 @@ onMounted(async () => {
         main()
         background()
     })
+    console.log(store.isBackHome)
+
+    if (store.isBackHome) {
+        showAnimae.value = false
+    }
 })
 
 const router = useRouter()
+const showAnimae = ref(true)
 const topage = (page: string) => {
     router.push(page)
 }
 </script>
-<style lang='scss'>
+<style lang='scss' scoped>
 @import '../assets/style/homeStyle';
 @import '@/assets/style/animation/transition.scss';
+@import '@/assets/style/layout/layout';
 
 .github-corner:hover .octo-arm {
     animation: octocat-wave 560ms ease-in-out

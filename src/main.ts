@@ -6,10 +6,11 @@ import "@/assets/style/font/font.scss"
 import App from './App.vue'
 import VConsole from 'vconsole';
 import router from "@/router/index"
-import { createPinia } from 'pinia'
+// import { createPinia } from 'pinia'
+import pinia from "@/store/pinia";
 // 引入持久化插件
 import persist from 'pinia-plugin-persistedstate'
-const pinia = createPinia()
+// const pinia = createPinia()
 createApp(App).use(router).use(pinia.use(persist)).mount('#app')
 
 // 判断是否是pc设备
