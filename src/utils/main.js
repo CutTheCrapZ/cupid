@@ -1,15 +1,17 @@
-
 // import { anime } from "./anime.js";
+// import router from '@/router'
+// console.log(router)
 export function switchPage() {
-  if (switchPage.switched) {
-    return;
-  }
+  // 跳转返回后下滑失效原因
+  // if (switchPage.switched) {
+  //   return;
+  // }
   const DOM = {
     intro: $(".content-intro"),
     path: $(".shape-wrap path"),
-    shape: $("svg.shape"),
+    // shape: $("svg.shape"),
   };
-  DOM.shape.style.transformOrigin = "50% 0%";
+  // DOM.shape.style.transformOrigin = "50% 0%";
   anime({
     targets: DOM.intro,
     duration: 1100,
@@ -18,7 +20,7 @@ export function switchPage() {
   });
 
   anime({
-    targets: DOM.shape,
+    // targets: DOM.shape,
     scaleY: [
       {
         value: [0.8, 1.8],
@@ -163,9 +165,10 @@ export const main = () => {
   }
 
   function loadAll() {
-    if (loadAll.loaded) {
-      return;
-    }
+    // 跳转返回后下滑失效原因
+    // if (loadAll.loaded) {
+    //   return;
+    // }
     switchPage();
     loadMain();
     loadAll.loaded = true;
@@ -181,6 +184,11 @@ export const main = () => {
     loadIntro();
   });
   const enterEl = $(".enter");
+  const arrow = document.querySelectorAll(".arrow");
+  for (let i = 0; i < arrow.length; i++) {
+    arrow[i].addEventListener("touchenter", loadAll);
+    arrow[i].addEventListener("click", loadAll);
+  }
   enterEl.addEventListener("click", loadAll);
   enterEl.addEventListener("touchenter", loadAll);
 
@@ -188,29 +196,29 @@ export const main = () => {
   $(".arrow").addEventListener("mouseenter", loadAll);
 
   if (isPhone) {
-    document.addEventListener(
-      "touchstart",
-      function (e) {
-        window.startx = e.touches[0].pageX;
-        window.starty = e.touches[0].pageY;
-      },
-      { passive: true }
-    );
-    document.addEventListener(
-      "touchend",
-      function (e) {
-        let endx, endy;
-        endx = e.changedTouches[0].pageX;
-        endy = e.changedTouches[0].pageY;
-
-        const direction = getMoveDirection(startx, starty, endx, endy);
-        if (direction !== DIRECTIONS.UP) {
-          return;
-        }
-        loadAll();
-      },
-      { passive: true }
-    );
+    /* 移动端监听上滑跳转页面 */
+    // document.addEventListener(
+    //   "touchstart",
+    //   function (e) {
+    //     window.startx = e.touches[0].pageX;
+    //     window.starty = e.touches[0].pageY;
+    //   },
+    //   { passive: true }
+    // );
+    // document.addEventListener(
+    //   "touchend",
+    //   function (e) {
+    //     let endx, endy;
+    //     endx = e.changedTouches[0].pageX;
+    //     endy = e.changedTouches[0].pageY;
+    //     const direction = getMoveDirection(startx, starty, endx, endy);
+    //     if (direction !== DIRECTIONS.UP) {
+    //       return;
+    //     }
+    //     loadAll();
+    //   },
+    //   { passive: true }
+    // );
   }
   /* background */
 };

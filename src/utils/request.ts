@@ -6,6 +6,8 @@ import { refreshT } from "@/utils/oneDrive";
 // import { getToken } from '@/utils/cookies'
 export default (config: any) => {
   let oneDriveHttp = config.oneDriveHttp
+  let img = config.img
+
   // 创建axios实例
   const service: any = axios.create({
     // baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -23,6 +25,9 @@ export default (config: any) => {
       if (oneDriveHttp) {
         config.baseURL = "https://graph.microsoft.com/v1.0"
         config.headers['Authorization'] = localStorage.getItem("access_token")
+        if (img) {
+          config.responseType = 'blob'
+        }
       }
       config.headers['Content-Type'] =
         config.headers['Content-Type'] || 'application/json'

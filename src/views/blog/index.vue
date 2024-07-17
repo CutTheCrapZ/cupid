@@ -1,18 +1,18 @@
 <!--  -->
 <template>
   <div class="weibo">
-    <h1 class="post-card-title">xxxxx</h1>
+    <h1 class="post-card-title">xxx的随笔</h1>
 
     <TransitionGroup name="fade" tag="div">
       <div v-for="item in list" :key="item._id" class="sentence">
         <div class="header">
           <span class="username">Zoey💘</span>
           <span class="dot">·</span>
-          <span class="date">2023-01-01</span>
+          <span class="date">{{ item.created_d.slice(0, 10) }}</span>
           <span class="tag" :style="{ backgroundColor: tag[item.tag].background, color: tag[item.tag].color }">{{
             tag[item.tag].text }}</span>
         </div>
-        <div class="content">
+        <div class="contentz">
           {{ item.sentences }}
         </div>
         <div class="footer"></div>
@@ -23,7 +23,7 @@
 </template>
   
 <script lang='ts' setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, nextTick } from "vue";
 import { getStyleList } from "@/api/sentence";
 onMounted(() => {
   getList()
@@ -35,20 +35,42 @@ const tag = [
   { text: "👻生活", background: "rgb(171, 252, 198)", color: "black" }
 ]
 const reqData = ref<{ curPage: number, pageSize: number, total: number }>({ curPage: 1, pageSize: 20, total: 0 })
-const list = ref<{ _id: string, tag: number, sentences: string }[]>([]);
+const list = ref<{ _id: string, tag: number, sentences: string, created_d: string }[]>([]);
 const getList = async () => {
   let res = await getStyleList(reqData.value)
   if (res.code === 200) {
-    list.value = res.list
+    list.value = [...list.value, ...res.list]
     reqData.value = res.pagination
+    if (reqData.value.curPage * reqData.value.pageSize < reqData.value.total) { console.log(333);observe() }else{
+
+    };
   }
 }
+const observe = () => {
+  nextTick(() => {
+    let dom = document.querySelectorAll(".sentence")
+    const o = new IntersectionObserver((config, observe) => {
+      if (config[0].intersectionRatio > 0) {
+        reqData.value.curPage += 1
+        getList()
+        o.unobserve(dom[dom.length - 3])
+      }
+    })
+    o.observe(dom[dom.length - 3])
+  })
+
+}
 </script>
-<style lang='scss' scoped>
+<style lang='scss'>
 .weibo {
-  padding: 1.75rem;
-  width: 50%;
-  margin: 0 auto;
+  padding: 1.75rem 28%;
+  width: 100%;
+  background-image: linear-gradient(180deg, #f5f1f1 30%, #eff1f3 45%, #f7f4ee 71%, #efefef 91%);
+
+  @media screen and (max-width: 560px) {
+    width: 100% !important;
+    padding: 12%;
+  }
 
   .sentence {
     padding: 1rem 1.5rem;
@@ -83,10 +105,11 @@ const getList = async () => {
 
       .tag {
         margin-left: auto;
-        padding: 5px 6px;
+        padding: .15rem .25rem;
         font-size: .7rem;
         border-radius: 3px;
-        box-shadow: inset 0 -1px 0 rgba(27, 31, 35, .12)
+        box-shadow: inset 0 -1px 0 rgba(27, 31, 35, .12);
+        font-family: Comic Sans MS, Helvetica Neue, Microsoft Yahei, -apple-system, sans-serif;
       }
 
       .dot,
@@ -96,7 +119,7 @@ const getList = async () => {
       }
     }
 
-    .content {
+    .contentz {
       margin: .5rem 0 1rem;
       font-size: .75rem;
       letter-spacing: 1px;

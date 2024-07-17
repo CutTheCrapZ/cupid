@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import './style.scss'
 import "@/utils/rem"
 import 'animate.css';
-import "@/assets/style/font/font.scss"
+// import "@/assets/style/font/font.scss"
 import App from './App.vue'
 import VConsole from 'vconsole';
 import router from "@/router/index"
@@ -33,3 +33,47 @@ if (import.meta.env.VITE_NODE_ENV != "production" && !isPc()) {
     console.log(import.meta.env.VITE_NODE_ENV);
     const vConsole = new VConsole();
 }
+//获取页面静态资源加载信息
+const resourceList: any = []
+new PerformanceObserver((list) => {
+    list
+        .getEntries().forEach((entry: any) => {
+            if (entry.name.includes('https://graph.microsoft.com')) return//微软服务器忽略
+            if ((entry.transferSize / 1024 > 10) && entry.duration > 500) {
+                resourceList.push({
+                    name: entry.name, // 资源名称
+                    loadTime: `${(entry.duration / 1000).toFixed(3)}s`, // 资源加载时间
+                    type: entry.initiatorType, // 资源类型
+                    size: `${(entry.transferSize / 1024).toFixed(0)}kb`, // 资源大小
+                })
+                console.warn(`
+                该资源大小超过10kb且加载时间超过500毫秒
+                资源名称:${entry.name}
+                资源类型:${entry.initiatorType}
+                资源大小:${(entry.transferSize / 1024).toFixed(0)}kb(${entry.transferSize})
+                加载时间:${(entry.duration / 1000).toFixed(3)}s(${entry.duration})
+                `)
+            }
+            else if (entry.duration > 500) {
+                console.warn(`
+                该资源加载时间超过500毫秒
+                资源名称:${entry.name}
+                资源类型:${entry.initiatorType}
+                资源大小:${(entry.transferSize / 1024).toFixed(0)}kb(${entry.transferSize})
+                加载时间:${(entry.duration / 1000).toFixed(3)}s(${entry.duration})
+                `)
+            }
+        })
+}).observe({ entryTypes: ['resource'] })
+const entryHandler = (list: any) => {
+    for (const entry of list.getEntries()) {
+        if (entry.name === 'first-paint') {
+            observer.disconnect()
+            console.log(`FP:${(entry.startTime / 1000).toFixed(3)}s(${entry.startTime})
+            从页面加载开始到第一个像素绘制到屏幕上的时间，也可以把 FP 理解成白屏时间。`)
+        }
+    }
+}
+
+const observer = new PerformanceObserver(entryHandler)
+observer.observe({ type: 'paint', buffered: true })

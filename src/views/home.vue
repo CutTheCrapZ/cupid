@@ -6,7 +6,7 @@
                     height="1291"></canvas>
                 <div class="wrap fade in">
                     <!-- github -->
-                    <!-- <a class="github-corner" href="https://github.com/Tomotoes/HomePage"
+                    <!-- <a class="github-corner" href=""
 						aria-label="View source on GitHub" target="_blank" rel="noopener noreferrer"><svg width="80"
 							height="80" viewBox="0 0 250 250"
 							style="fill:transparent; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
@@ -46,8 +46,8 @@
                     <ul>
                         <li><a @click="topage('blog')" aria-label="Blog"><i class="icon icon-bokeyuan"></i><span
                                     data-translate="Blog">Blog</span></a></li>
-                        <li><a @click="topage('about')" aria-label="About"><i class="icon icon-other"></i><span
-                                    data-translate="About">About</span></a></li>
+                        <li><a @click="topage('learn')" aria-label="Learn"><i class="icon icon-other"></i><span
+                                    data-translate="Learn">Learn</span></a></li>
                         <li><a @click="topage('style')" aria-label="Style"><i class="icon icon-xiaolian"></i><span
                                     data-translate="Style">Style</span></a></li>
                         <li v-if="store.token"><a @click="topage('think')" aria-label="Think"><i
@@ -71,7 +71,6 @@ import { background } from "@/utils/background.js";
 import { main } from "@/utils/main.js";
 import { searchToken, uploadToken, getToken, checkToken } from "@/api/oneDrive";
 import { refreshT } from "@/utils/oneDrive";
-// import { refreshT } from "@/utils/oneDrive";
 const store = useStore();
 const getT = async () => {
     let res = await getToken()
@@ -79,7 +78,6 @@ const getT = async () => {
         res.data.access_token && localStorage.setItem("access_token", res.data.access_token)
         res.data.refresh_token && localStorage.setItem("refresh_token", res.data.refresh_token)
         res.data.token_type && localStorage.setItem("token_type", res.data.token_type)
-        // refreshToken()
         try {
             // await checkToken()
         } catch (error) {
