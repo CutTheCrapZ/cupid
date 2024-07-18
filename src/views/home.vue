@@ -79,7 +79,7 @@ const getT = async () => {
         res.data.refresh_token && localStorage.setItem("refresh_token", res.data.refresh_token)
         res.data.token_type && localStorage.setItem("token_type", res.data.token_type)
         try {
-            // await checkToken()
+            await checkToken()
         } catch (error) {
             refreshT(res.data.refresh_token)
         }

@@ -68,10 +68,9 @@ const routes: Array<RouteRecordRaw> = [
   //   component: () => import("@/views/think/index.vue"),
   // }
 ];
-if (import.meta.env.VITE_NODE_ENV != "production") {
-  console.log(import.meta.env.VITE_NODE_ENV);
-  routes[0].redirect = '/blog'
-}
+// if (import.meta.env.VITE_NODE_ENV != "production") {
+//   routes[0].redirect = '/blog'
+// }
 // 1.返回一个 router 实列，为函数，里面有配置项（对象） history
 const router = createRouter({
   history: createWebHashHistory(),
@@ -82,14 +81,12 @@ const store = useStore(pinia);
 router.afterEach((to, from, failure) => {  // 一定要再afterEach中判断而不是beforeEach，因为beforeEach在点击返回之后获取到的值不准确，每返回一次，会获取到延后一次的to、history
   console.log(to, from, failure)
   if (window.history.state && window.history.state.forward) { // 或者判断 to.forward,window.history.state.forward是vue-router写入的，当返回或前进的时候才会有值
-    console.log(123)
     to.meta.isBack = true;
     if (to.fullPath == '/' && from.fullPath == '/') {
       store.SAVEBACKHOME(false)
     } else {
       store.SAVEBACKHOME(true)
     }
-    console.log(store.isBackHome)
   } else {
     to.meta.isBack = false;
   }
