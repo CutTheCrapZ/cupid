@@ -6,7 +6,7 @@
                     height="1291"></canvas>
                 <div class="wrap fade in">
                     <!-- github -->
-                    <!-- <a class="github-corner" href=""
+                    <!-- <a class="github-corner" href="https://github.com/Tomotoes/HomePage"
 						aria-label="View source on GitHub" target="_blank" rel="noopener noreferrer"><svg width="80"
 							height="80" viewBox="0 0 250 250"
 							style="fill:transparent; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
@@ -28,7 +28,7 @@
                     <div class="arrow arrow-2"></div>
                 </div>
             </div>
-            <div class="shape-wrap"><svg class="shape" width="100%" height="100vh" preserveAspectRatio="none"
+            <div class="shape-wrap" :style="{ display: showAnimae ? 'block' : 'none' }"><svg class="shape" width="100%" height="100vh" preserveAspectRatio="none"
                     viewBox="0 0 1440 800" style="fill: rgb(30, 31, 33);">
                     <path
                         d="M-44-50C-52.71 28.52 15.86 8.186 184 14.69 383.3 22.39 462.5 12.58 638 14 835.5 15.6 987 6.4 1194 13.86 1661 30.68 1652-36.74 1582-140.1 1512-243.5 15.88-589.5-44-50Z"
@@ -71,6 +71,7 @@ import { background } from "@/utils/background.js";
 import { main } from "@/utils/main.js";
 import { searchToken, uploadToken, getToken, checkToken } from "@/api/oneDrive";
 import { refreshT } from "@/utils/oneDrive";
+// import { refreshT } from "@/utils/oneDrive";
 const store = useStore();
 const getT = async () => {
     let res = await getToken()
@@ -78,6 +79,7 @@ const getT = async () => {
         res.data.access_token && localStorage.setItem("access_token", res.data.access_token)
         res.data.refresh_token && localStorage.setItem("refresh_token", res.data.refresh_token)
         res.data.token_type && localStorage.setItem("token_type", res.data.token_type)
+        // refreshToken()
         try {
             await checkToken()
         } catch (error) {
