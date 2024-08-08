@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="weibo">
-    <h1 class="post-card-title">xxx的随笔</h1>
+    <h1 class="post-card-title">zoey的随笔</h1>
 
     <TransitionGroup name="fade" tag="div">
       <div v-for="item in list" :key="item._id" class="sentence">

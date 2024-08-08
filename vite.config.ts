@@ -8,6 +8,12 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
+      imports: [
+        'vue',
+        'vue-router',
+        'pinia',
+      ],
+      dts: 'auto-imports.d.ts', // 使用typescript，需要指定生成对应的d.ts文件或者设置为true,生成默认导入d.ts文件
       resolvers: [ElementPlusResolver()]
     }),
     Components({

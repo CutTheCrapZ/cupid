@@ -52,6 +52,17 @@ const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
+    path: "/demo",
+    component: () => import("@/views/demo/index.vue"),
+    children: [
+      {
+        path: "bilibiliBanner",
+        name: "bilibiliBanner",
+        component: () => import('@/views/demo/children/bilibiliBanner/index.vue')
+      },
+    ],
+  },
+  {
     path: "/weibo",
     component: () => import("@/views/weibo/index.vue"),
   },

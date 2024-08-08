@@ -18,8 +18,6 @@
 <script lang='ts' setup>
 import { ref } from 'vue'
 import { useRouter } from "vue-router";
-
-
 let router = useRouter()
 //获取子路由
 let r = router.options.routes.filter(ele => {
