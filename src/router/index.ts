@@ -15,6 +15,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/blog/index.vue"),
   },
   {
+    path: "/InfiniteList",
+    component: () => import("@/views/InfiniteList.vue"),
+  },
+  {
     path: "/learn",
     component: () => import("@/views/learn/index.vue"),
     children: [
@@ -79,7 +83,6 @@ const router = createRouter({
 const store = useStore(pinia);
 // 添加统一判断是否返回
 router.afterEach((to, from, failure) => {  // 一定要再afterEach中判断而不是beforeEach，因为beforeEach在点击返回之后获取到的值不准确，每返回一次，会获取到延后一次的to、history
-  console.log(to, from, failure)
   if (window.history.state && window.history.state.forward) { // 或者判断 to.forward,window.history.state.forward是vue-router写入的，当返回或前进的时候才会有值
     to.meta.isBack = true;
     if (to.fullPath == '/' && from.fullPath == '/') {
