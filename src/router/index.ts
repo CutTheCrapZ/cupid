@@ -66,11 +66,16 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/style/detail',
     component: () => import("@/views/style/children/index.vue")
-  }
+  },
+  {
+    path: "/map",
+    component: () => import("@/views/map.vue"),
+  },
   // {
   //   path: "/think",
   //   component: () => import("@/views/think/index.vue"),
   // }
+
 ];
 // if (import.meta.env.VITE_NODE_ENV != "production") {
 //   routes[0].redirect = '/blog'
