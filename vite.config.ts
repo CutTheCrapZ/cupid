@@ -28,7 +28,7 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
-    port: 5173,
+    port: 5174,
     // 是否开启 https
     https: false,
   },
