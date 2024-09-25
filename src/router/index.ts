@@ -64,6 +64,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "bilibiliBanner",
         component: () => import('@/views/demo/children/bilibiliBanner/index.vue')
       },
+      {
+        name: "map",
+        path: "map",
+        component: () => import("@/views/demo/children/cavansMap/index.vue"),
+      },
     ],
   },
   {
@@ -77,10 +82,6 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/style/detail',
     component: () => import("@/views/style/children/index.vue")
-  },
-  {
-    path: "/map",
-    component: () => import("@/views/map.vue"),
   },
   // {
   //   path: "/think",
